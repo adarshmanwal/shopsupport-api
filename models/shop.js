@@ -97,7 +97,7 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: 0
     },
     images: {
-      type: DataTypes.ARRAY(DataTypes.STRING),
+      type: DataTypes.STRING,
       allowNull: true
     },
     owner: {
