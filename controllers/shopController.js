@@ -27,7 +27,8 @@ module.exports = {
   // Get all shops
   async getAll(req, res) {
     try {
-      const shops = await Shop.findAll();
+      const userId = req.user.id;
+      const shops = await Shop.findAll({where: {owner: userId}});
       return res.status(200).json(shops);
     } catch (error) {
       return res.status(400).json({ error: error.message });
