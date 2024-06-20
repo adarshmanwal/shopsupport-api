@@ -22,7 +22,7 @@ const authenticateToken = (req, res, next) => {
 // Set up Multer storage and file handling
 const storage = multer.diskStorage({
   destination: (req, file, cb) => {
-    cb(null, 'uploads/'); // Directory to save the uploaded files
+    cb(null, '/home/adarsh/workspace/anguler/ShopSupport/src/assets/'); // Directory to save the uploaded files
   },
   filename: (req, file, cb) => {
     cb(null, Date.now() + path.extname(file.originalname)); // Use a unique filename
