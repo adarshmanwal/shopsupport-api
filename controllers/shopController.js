@@ -1,4 +1,4 @@
-const { Shop } = require('../models'); // Import the Shop model
+const { Shop } = require("../models"); // Import the Shop model
 
 module.exports = {
   // Create a new shop
@@ -15,8 +15,11 @@ module.exports = {
   async getById(req, res) {
     try {
       const shop = await Shop.findByPk(req.params.id);
+      if (shop && shop.owner !== req.user.id) {
+        return req.status(401).json({ error: "You are not authorized" });
+      }
       if (!shop) {
-        return res.status(404).json({ error: 'Shop not found' });
+        return res.status(404).json({ error: "Shop not found" });
       }
       return res.status(200).json(shop);
     } catch (error) {
@@ -28,7 +31,7 @@ module.exports = {
   async getAll(req, res) {
     try {
       const userId = req.user.id;
-      const shops = await Shop.findAll({where: {owner: userId}});
+      const shops = await Shop.findAll({ where: { owner: userId } });
       return res.status(200).json(shops);
     } catch (error) {
       return res.status(400).json({ error: error.message });
@@ -40,7 +43,7 @@ module.exports = {
     try {
       const shop = await Shop.findByPk(req.params.id);
       if (!shop) {
-        return res.status(404).json({ error: 'Shop not found' });
+        return res.status(404).json({ error: "Shop not found" });
       }
       await shop.update(req.body);
       return res.status(200).json(shop);
@@ -54,12 +57,12 @@ module.exports = {
     try {
       const shop = await Shop.findByPk(req.params.id);
       if (!shop) {
-        return res.status(404).json({ error: 'Shop not found' });
+        return res.status(404).json({ error: "Shop not found" });
       }
       await shop.destroy();
       return res.status(204).json();
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
-  }
+  },
 };
