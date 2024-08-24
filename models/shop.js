@@ -122,6 +122,7 @@ module.exports = (sequelize, DataTypes) => {
     // associations can be defined here
     Shop.belongsTo(models.User, {
       foreignKey: 'owner',
+      onDelete: 'CASCADE',
       as: 'user'
     });
   };
