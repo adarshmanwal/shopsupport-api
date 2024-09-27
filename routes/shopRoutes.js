@@ -5,19 +5,8 @@ const shopController = require('../controllers/shopController'); // Import shop 
 const { promisify } = require('util'); // Import promisify from util module
 const multer = require('multer');
 const path = require('path');
-
-const authenticateToken = (req, res, next) => {
-  const token = req.header('Authorization')?.split(' ')[1];
-  if (!token) return res.status(401).json({ error: 'Access denied' });
-
-  try {
-    const verified = jwt.verify(token, process.env.JWT_SECRET);
-    req.user = verified;
-    next();
-  } catch (error) {
-    res.status(400).json({ error: 'Invalid token' });
-  }
-};
+const productRoutes = require('./shopProductRoutes');
+const authenticateToken = require('../middleware/authmiddleware')
 
 // Set up Multer storage and file handling
 const storage = multer.diskStorage({
@@ -38,6 +27,7 @@ router.get('/:id', authenticateToken, shopController.getById);
 router.get('/', authenticateToken, shopController.getAll);
 router.put('/:id', authenticateToken, shopController.update);
 router.delete('/:id', authenticateToken, shopController.delete);
+router.use('/:shopid/product', authenticateToken, productRoutes);
 router.post('/upload', authenticateToken, async (req, res) => {
   try {
     await uploadAsync(req, res); // Handle file upload
