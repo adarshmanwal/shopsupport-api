@@ -27,7 +27,7 @@ router.get('/:id', authenticateToken, shopController.getById);
 router.get('/', authenticateToken, shopController.getAll);
 router.put('/:id', authenticateToken, shopController.update);
 router.delete('/:id', authenticateToken, shopController.delete);
-router.use('/:shopid/product', authenticateToken, productRoutes);
+router.use('/:shopId/product', authenticateToken, productRoutes);
 router.post('/upload', authenticateToken, async (req, res) => {
   try {
     await uploadAsync(req, res); // Handle file upload
