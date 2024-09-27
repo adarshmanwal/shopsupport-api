@@ -125,6 +125,13 @@ module.exports = (sequelize, DataTypes) => {
       onDelete: 'CASCADE',
       as: 'user'
     });
+
+    Shop.hasMany(models.Product, {
+      foreignKey: 'shopId',
+      onDelete: 'CASCADE', // Delete products if the shop is deleted
+      as: 'products'
+    });
+
   };
 
   return Shop;

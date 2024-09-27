@@ -3,8 +3,8 @@ const { Shop } = require('../models'); // Import the Shop model (if needed)
 const productController = {
   // Create a new product for a shop
   createProductForShop: async (req, res) => {
-    const { shopId} = req.params; // Get the shopId from the request parameters
-    const { name, description, rating, images, price } = req.body; // Get product details from the request body
+    const { shopId } = req.params; // Get the shopId from the request parameters
+    const { name, description, rating, price } = req.body; // Get product details from the request body
     try {
       // Check if the shop exists
       const shop = await Shop.findByPk(shopId);
@@ -17,7 +17,7 @@ const productController = {
         description,
         rating,
         price,
-        shopId: shop, // Associate product with the shop
+        shopId: shopId, // Associate product with the shop
       });
       res.status(201).json(product); // Respond with the created product
     } catch (error) {
